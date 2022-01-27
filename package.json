@@ -1,0 +1,29 @@
+{
+  "name": "hotel-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "mongodb": "^4.2.2",
+    "stripe": "^8.195.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/majharul-web/skyStars-backEnd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/majharul-web/skyStars-backEnd/issues"
+  },
+  "homepage": "https://github.com/majharul-web/skyStars-backEnd#readme",
+  "description": ""
+}
