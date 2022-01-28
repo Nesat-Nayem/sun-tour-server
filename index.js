@@ -42,9 +42,20 @@ async function run() {
 
     // read Service
     app.get("/service", async (req, res) => {
+      
       const cursor = servicesCollection.find({});
-      const post = await cursor.toArray();
+      const page = req.query.page;
+      const size = parseInt(req.query.size);
+      let post;
       const count = await cursor.count();
+      if(page){
+          post = await cursor.skip(page*size).limit(size).toArray()
+      }else{
+        const post = await cursor.toArray();
+      }
+     
+      
+     
       // const result = await servicesCollection.find({}).toArray();
 
       res.send({
@@ -74,6 +85,13 @@ async function run() {
       res.json(result);
     });
 
+    // single order get
+    app.get("/manageOrders/:id", async (req,res) =>{
+      const id = req.params.id;
+      const filter = {_id: ObjectId(id)};
+      const result = await ordersCollection.findOne(filter);
+      res.json(result)
+    })
     // add order
     app.post("/addOrder", async (req, res) => {
       const order = req.body;
