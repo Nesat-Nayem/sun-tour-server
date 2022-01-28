@@ -3,8 +3,6 @@ const { MongoClient } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const cors = require("cors");
-// stripe is on testing mode
-// const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,8 +10,7 @@ const port = process.env.PORT || 5000;
 // middle war
 app.use(cors());
 app.use(express.json());
-const uri =
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.hty68.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.hty68.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -42,21 +39,19 @@ async function run() {
 
     // read Service
     app.get("/service", async (req, res) => {
-      
       const cursor = servicesCollection.find({});
       const page = req.query.page;
       const size = parseInt(req.query.size);
       let post;
       const count = await cursor.count();
-      if(page){
-          post = await cursor.skip(page*size).limit(size).toArray()
-      }else{
+      if (page) {
+        post = await cursor
+          .skip(page * size)
+          .limit(size)
+          .toArray();
+      } else {
         const post = await cursor.toArray();
       }
-     
-      
-     
-      // const result = await servicesCollection.find({}).toArray();
 
       res.send({
         count,
@@ -86,12 +81,12 @@ async function run() {
     });
 
     // single order get
-    app.get("/manageOrders/:id", async (req,res) =>{
+    app.get("/manageOrders/:id", async (req, res) => {
       const id = req.params.id;
-      const filter = {_id: ObjectId(id)};
+      const filter = { _id: ObjectId(id) };
       const result = await ordersCollection.findOne(filter);
-      res.json(result)
-    })
+      res.json(result);
+    });
     // add order
     app.post("/addOrder", async (req, res) => {
       const order = req.body;
@@ -202,11 +197,9 @@ async function run() {
 }
 run().catch(console.dir);
 
-
 app.get("/", (req, res) => {
   res.send("opening on sun tour server");
 });
 app.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
 });
-//----------------------------- home page-----------------------------
